@@ -22,52 +22,44 @@ pipeline {
 
         stage('Terraform Format Check') {
             steps {
-                {
-                    sh '''
-                    terraform fmt -check
-                    '''
-                }
+                sh '''
+                terraform fmt -check
+                '''
             }
         }
 
         stage('Terraform Init') {
             steps {
-                {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'BoSJenkinsAdmin'
-                    ]]) {
-                        sh '''
-                        export AWS_DEFAULT_REGION=$AWS_REGION
-                        terraform init
-                        '''
-                    }
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'BoSJenkinsAdmin'
+                ]]) {
+                    sh '''
+                    export AWS_DEFAULT_REGION=$AWS_REGION
+                    terraform init
+                    '''
                 }
             }
         }
 
         stage('Terraform Validate') {
             steps {
-                {
-                    sh '''
-                    terraform validate
-                    '''
-                }
+                sh '''
+                terraform validate
+                '''
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'BoSJenkinsAdmin'
-                    ]]) {
-                        sh '''
-                        export AWS_DEFAULT_REGION=$AWS_REGION
-                        terraform plan -out=tfplan
-                        '''
-                    }
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'BoSJenkinsAdmin'
+                ]]) {
+                    sh '''
+                    export AWS_DEFAULT_REGION=$AWS_REGION
+                    terraform plan -out=tfplan
+                    '''
                 }
             }
         }
@@ -75,16 +67,14 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 input message: 'Approve Terraform Apply?', ok: 'Deploy'
-                {
-                    withCredentials([[
-                        $class: 'AmazonWebServicesCredentialsBinding',
-                        credentialsId: 'BoSJenkinsAdmin'
-                    ]]) {
-                        sh '''
-                        export AWS_DEFAULT_REGION=$AWS_REGION
-                        terraform apply -auto-approve tfplan
-                        '''
-                    }
+                withCredentials([[
+                    $class: 'AmazonWebServicesCredentialsBinding',
+                    credentialsId: 'BoSJenkinsAdmin'
+                ]]) {
+                    sh '''
+                    export AWS_DEFAULT_REGION=$AWS_REGION
+                    terraform apply -auto-approve tfplan
+                    '''
                 }
             }
         }
@@ -105,16 +95,14 @@ pipeline {
                     )
 
                     if (destroyChoice == 'yes') {
-                        {
-                            withCredentials([[
-                                $class: 'AmazonWebServicesCredentialsBinding',
-                                credentialsId: 'BoSJenkinsAdmin'
-                            ]]) {
-                                sh '''
-                                export AWS_DEFAULT_REGION=$AWS_REGION
-                                terraform destroy -auto-approve
-                                '''
-                            }
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            credentialsId: 'BoSJenkinsAdmin'
+                        ]]) {
+                            sh '''
+                            export AWS_DEFAULT_REGION=$AWS_REGION
+                            terraform destroy -auto-approve
+                            '''
                         }
                     } else {
                         echo "Skipping destroy"
