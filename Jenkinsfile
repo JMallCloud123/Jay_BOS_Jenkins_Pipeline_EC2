@@ -17,7 +17,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'BoSJenkinsAdmin'   // need populate based on name in Jenkins for AWS Credentials
+                    credentialsId: 'jenkinsadmin'   // need populate based on name in Jenkins for AWS Credentials
                 ]]) {
                     sh 'terraform init'
                 }
@@ -28,7 +28,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'BoSJenkinsAdmin'
+                    credentialsId: 'jenkinsadmin'
                 ]]) {
                     sh 'terraform validate'
                 }
@@ -45,7 +45,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'BoSJenkinsAdmin' // need populate based on name in Jenkins for AWS Credentials
+                    credentialsId: 'jenkinsadmin' // need populate based on name in Jenkins for AWS Credentials
                 ]]) {
                     sh '''
                         terraform plan -out=tfplan
@@ -73,7 +73,7 @@ pipeline {
                     if (destroyChoice == 'yes') {
                         withCredentials([[
                             $class: 'AmazonWebServicesCredentialsBinding',
-                            credentialsId: 'BoSJenkinsAdmin' // need populate based on name in Jenkins for AWS Credentials
+                            credentialsId: 'jenkinsadmin' // need populate based on name in Jenkins for AWS Credentials
                         ]]) {
                             sh 'terraform destroy -auto-approve'
                         }
