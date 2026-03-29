@@ -20,19 +20,19 @@ resource "aws_s3_object" "png1" {
 
 resource "aws_s3_object" "png2" {
   bucket = aws_s3_bucket.frontend.id
-  key    = "JenkinsSuccessProof.png"
+  key    = "Jenkins_Server_Proof/JenkinsSuccessProof.png"
   source = "${path.module}/Jenkins_Server_Proof/JenkinsSuccessProof.png"
 }
 
 resource "aws_s3_object" "png3" {
   bucket = aws_s3_bucket.frontend.id
-  key    = "JenkinsWebhookProof.png"
+  key    = "Jenkins_Server_Proof/JenkinsWebhookProof.png"
   source = "${path.module}/Jenkins_Server_Proof/JenkinsWebhookProof.png"
 }
 
 resource "aws_s3_object" "png4" {
   bucket = aws_s3_bucket.frontend.id
-  key    = "JenkinsWebhookSuccessAfterGitPush1.png"
+  key    = "Jenkins_Server_Proof/JenkinsWebhookSuccessAfterGitPush1.png"
   source = "${path.module}/Jenkins_Server_Proof/JenkinsWebhookSuccessAfterGitPush1.png"
 }
 
