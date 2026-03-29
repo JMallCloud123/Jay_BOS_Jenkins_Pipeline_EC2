@@ -53,6 +53,12 @@ resource "aws_s3_object" "png7" {
   key    = "Jenkins_Server_Proof/S3PublicProof.png"
   source = "${path.module}/Jenkins_Server_Proof/S3PublicProof.png"
 }
+
+resource "aws_s3_object" "png8" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "Jenkins_Server_Proof/S3FinalProof.png"
+  source = "${path.module}/Jenkins_Server_Proof/S3FinalProof.png"
+}
 resource "aws_s3_bucket_public_access_block" "pab_name" {
   bucket = aws_s3_bucket.frontend.id
 
