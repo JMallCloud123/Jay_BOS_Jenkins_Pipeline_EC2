@@ -12,8 +12,54 @@ resource "aws_s3_object" "txt" {
   key    = "Armaggeddon_Evidence/BoS_Armageddon_Project_Class7_GitHub.txt"
   source = "${path.module}/Armaggeddon_Evidence/BoS_Armageddon_Project_Class7_GitHub.txt"
 }
-resource "aws_s3_object" "png" {
+resource "aws_s3_object" "png1" {
   bucket = aws_s3_bucket.frontend.id
   key    = "Armaggeddon_Evidence/Theo_Passed_Project.png"
   source = "${path.module}/Armaggeddon_Evidence/Theo_Passed_Project.png"
-}  
+}
+
+resource "aws_s3_object" "png2" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "JenkinsSuccessProof.png"
+  source = "${path.module}/Jenkins_Server_Proof/JenkinsSuccessProof.png"
+}
+
+resource "aws_s3_object" "png3" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "JenkinsWebhookProof.png"
+  source = "${path.module}/Jenkins_Server_Proof/JenkinsWebhookProof.png"
+}
+
+resource "aws_s3_object" "png4" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "JenkinsWebhookSuccessAfterGitPush1.png"
+  source = "${path.module}/Jenkins_Server_Proof/JenkinsWebhookSuccessAfterGitPush1.png"
+}
+
+resource "aws_s3_bucket_public_access_block" "pab_name" {
+  bucket = aws_s3_bucket.frontend.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+
+}
+
+resource "aws_s3_bucket_policy" "bp_name" {
+  bucket = aws_s3_bucket.frontend.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.frontend.arn}/*"
+      },
+    ]
+  })
+
+  depends_on = [aws_s3_bucket_public_access_block.pab_name]
+}
