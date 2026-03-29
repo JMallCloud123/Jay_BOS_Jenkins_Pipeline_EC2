@@ -36,6 +36,23 @@ resource "aws_s3_object" "png4" {
   source = "${path.module}/Jenkins_Server_Proof/JenkinsWebhookSuccessAfterGitPush1.png"
 }
 
+resource "aws_s3_object" "png5" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "Jenkins_Server_Proof/S3Proof1.png"
+  source = "${path.module}/Jenkins_Server_Proof/S3Proof1.png"
+}
+
+resource "aws_s3_object" "png6" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "Jenkins_Server_Proof/S3Proof2.png"
+  source = "${path.module}/Jenkins_Server_Proof/S3Proof2.png"
+}
+
+resource "aws_s3_object" "png7" {
+  bucket = aws_s3_bucket.frontend.id
+  key    = "Jenkins_Server_Proof/S3PublicProof.png"
+  source = "${path.module}/Jenkins_Server_Proof/S3PublicProof.png"
+}
 resource "aws_s3_bucket_public_access_block" "pab_name" {
   bucket = aws_s3_bucket.frontend.id
 
